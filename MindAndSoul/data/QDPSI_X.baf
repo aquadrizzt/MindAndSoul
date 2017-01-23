@@ -1,0 +1,9 @@
+IF 
+	True()
+THEN
+	RESPONSE #100
+		ChangeStat(LastSummonerOf(Myself),LEVEL,0,SET)
+		ChangeClass(LastSummonerOf(Myself),MAGE)
+		ActionOverride(LastSummonerOf(Myself),AddKit(QDPSION))
+		DestroySelf()
+END 

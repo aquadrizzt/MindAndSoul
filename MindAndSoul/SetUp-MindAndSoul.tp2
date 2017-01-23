@@ -1,0 +1,95 @@
+BACKUP ~MindAndSoul/backup~
+AUTHOR ~aquadrizzt@gmail.com~
+VERSION ~0.0~ 
+
+/* Language Settings */
+AUTO_TRA ~MindAndSoul/tra/%s~
+LANGUAGE ~English~ ~english~ ~MindAndSoul/tra/english/setup.tra~
+
+// -----------------------------
+// MIND AND SOUL
+// -----------------------------
+BEGIN @0
+
+INCLUDE ~MindAndSoul/lib/fl#add_kit_ee.tpa~
+//Making Jesters use the Blade kit flag (should work with Might and Guile kit flag switching)
+COPY_EXISTING ~kitlist.2da~ ~override~
+	REPLACE_TEXTUALLY EXACT_MATCH ~0x00400000~ ~0x00200000~
+BUT_ONLY
+  
+//This will make all spells unusable to characters with the Jester flag. 
+COPY_EXISTING_REGEXP GLOB ~^.+\.spl$~ ~override~
+  READ_SHORT 0x1c spell_type
+  PATCH_IF spell_type = 1 BEGIN
+	  READ_BYTE 0x20 psion_excludes
+	  WRITE_BYTE 0x20 (%psion_excludes% BOR ~0b01000000~)  // taking over the jester flag
+  END
+BUT_ONLY 
+
+//Should update mage scrolls to be unusable by jesters 
+
+//Adding psi [tracking] checks to splprot.2da 
+APPEND ~splprot.2da~ ~PSI_LT		33		-1		2~ 
+APPEND ~splprot.2da~ ~PSI_GTEQ		33		-1		4~ 
+
+COPY ~MindAndSoul/data/BLANKCLAB.2da~ ~override/QDPSION.2da~ 
+
+//actual psionics kit
+ADD_KIT ~QDPSION~
+	~QDPSION 1 0 1 1 0 0 0 0~ //clasweap.2da
+	~QDPSION 0 1 0 0 1 0 0 1 0 0 0 0 0 0 0 1 0 0 1 0 0 0 1 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~ //weapprof.2da 
+	~QDPSION 0 0 0 9 0 0~ //abclasrq.2da 
+	~QDPSION 0 0 0 0 0 0~ //abclsmod.2da
+	~QDPSION 0 0 0 17 0 0~ //abdcdsrq.2da
+	~QDPSION 0 0 0 15 0 0~ //abdcscrq.2da 
+	~QDPSION 1 1 1 1 1 1 1 1 1~ //alignmnt.2da
+	~QDPSION 1 1 0 1 0 0~ //dualclas.2da
+	~override/QDPSION.2da~ //CLAB
+	~~ 
+	~0x00400000	1~ 
+	~MA0~ 
+	~* * * * * * * * * * * * * * * * * * * *~
+	SAY ~psion~
+	SAY ~Psion~
+	SAY ~PSION!~
+
+	LAF fl#add_kit_ee
+		INT_VAR
+			briefdesc = RESOLVE_STR_REF (@0)
+		STR_VAR
+			kit_name = ~QDPSION~
+			hpclass = ~HPWIZ~
+	END
+
+//character creation fake kit	
+ADD_KIT ~QDPSIONC~
+	~QDPSIONC 1 0 1 1 0 0 0 0~ //clasweap.2da
+	~QDPSIONC 0 1 0 0 1 0 0 1 0 0 0 0 0 0 0 1 0 0 1 0 0 0 1 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~ //weapprof.2da 
+	~QDPSIONC 0 0 0 9 0 0~ //abclasrq.2da 
+	~QDPSIONC 0 0 0 0 0 0~ //abclsmod.2da
+	~QDPSIONC 0 0 0 17 0 0~ //abdcdsrq.2da
+	~QDPSIONC 0 0 0 15 0 0~ //abdcscrq.2da 
+	~QDPSIONC 1 1 1 1 1 1 1 1 1~ //alignmnt.2da
+	~QDPSIONC 1 1 0 1 0 0~ //dualclas.2da
+	~MindAndSoul/data/QDPSIONC.2da~ //CLAB
+	~K_F_H K_F_HE K_F_E K_F_D K_F_G K_F_HO K_F_HL~ 
+	~0x00400000	2~ 
+	~MA0~ 
+	~* * * * * * * * * * * * * * * * * * * *~
+	SAY ~psion~
+	SAY ~Psion~
+	SAY ~PSION!~
+
+	LAF fl#add_kit_ee
+		INT_VAR
+			briefdesc = RESOLVE_STR_REF (@0)
+		STR_VAR
+			kit_name = ~QDPSIONC~
+			hpclass = ~HPWIZ~
+			numwslot = ~2~
+	END
+
+COMPILE ~MindAndSoul/data/QDPSI_X.baf~ 
+
+COPY ~MindAndSoul/data/QDPSI_X.cre~ ~override~
+COPY ~MindAndSoul/data/QDPSI_X.spl~ ~override~
