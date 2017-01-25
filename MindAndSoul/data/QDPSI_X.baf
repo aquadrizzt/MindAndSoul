@@ -1,9 +1,32 @@
 IF 
 	True()
+THEN 
+	RESPONSE #100 
+		ChangeStat(LastSummonerOf(Myself),TRACKING,0,SET)
+		ApplySpellRES("qd#weaps",LastSummonerOf(Myself))
+		Continue()
+END 
+
+IF 
+	Kit(LastSummonerOf(Myself),QD#PSION)
 THEN
 	RESPONSE #100
 		ChangeStat(LastSummonerOf(Myself),LEVEL,0,SET)
 		ChangeClass(LastSummonerOf(Myself),MAGE)
 		ActionOverride(LastSummonerOf(Myself),AddKit(QDPSION))
+		ChangeStat(LastSummonerOf(Myself),MAXHITPOINTS,1,SET)
 		DestroySelf()
 END 
+/*
+IF 
+	Kit(LastSummonerOf(Myself),QD#PSYWR)
+THEN
+	RESPONSE #100
+		ChangeStat(LastSummonerOf(Myself),LEVEL,0,SET)
+		ChangeStat(LastSummonerOf(Myself),LEVEL2,0,SET)
+		ChangeClass(LastSummonerOf(Myself),FIGHTER_MAGE)
+		ActionOverride(LastSummonerOf(Myself),AddKit(QDPSYWR))
+		ChangeStat(LastSummonerOf(Myself),MAXHITPOINTS,1,SET)
+		DestroySelf()
+END 
+*/

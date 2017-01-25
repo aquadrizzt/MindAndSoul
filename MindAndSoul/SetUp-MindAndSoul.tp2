@@ -7,11 +7,10 @@ AUTO_TRA ~MindAndSoul/tra/%s~
 LANGUAGE ~English~ ~english~ ~MindAndSoul/tra/english/setup.tra~
 
 // -----------------------------
-// MIND AND SOUL
+// ENGINE STUFF
 // -----------------------------
-BEGIN @0
+BEGIN ~Engine Stuff~ 
 
-INCLUDE ~MindAndSoul/lib/fl#add_kit_ee.tpa~
 //Making Jesters use the Blade kit flag (should work with Might and Guile kit flag switching)
 COPY_EXISTING ~kitlist.2da~ ~override~
 	REPLACE_TEXTUALLY EXACT_MATCH ~0x00400000~ ~0x00200000~
@@ -32,9 +31,22 @@ BUT_ONLY
 APPEND ~splprot.2da~ ~PSI_LT		33		-1		2~ 
 APPEND ~splprot.2da~ ~PSI_GTEQ		33		-1		4~ 
 
-COPY ~MindAndSoul/data/BLANKCLAB.2da~ ~override/QDPSION.2da~ 
+//Psionics is a unique "school" (allows tie into save vs. school bonus)
+APPEND ~mschool.2da~ ~PSIONICS 	-1~ 
 
-//actual psionics kit
+//Psionic abilities function differently 
+APPEND ~msectype.2da~ ~PsionicOffense	 	-1~ 
+APPEND ~msectype.2da~ ~PsionicDefense 	-1~ 
+
+//Adding Psi to the character record 
+
+//----------------------
+// PSIONIC CLASSES 
+//----------------------
+INCLUDE ~MindAndSoul/lib/fl#add_kit_ee.tpa~
+
+COPY ~MindAndSoul/data/PSICHANGE.2da~ ~override/QD#PSION.2da~ 
+
 ADD_KIT ~QDPSION~
 	~QDPSION 1 0 1 1 0 0 0 0~ //clasweap.2da
 	~QDPSION 0 1 0 0 1 0 0 1 0 0 0 0 0 0 0 1 0 0 1 0 0 0 1 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~ //weapprof.2da 
@@ -44,52 +56,150 @@ ADD_KIT ~QDPSION~
 	~QDPSION 0 0 0 15 0 0~ //abdcscrq.2da 
 	~QDPSION 1 1 1 1 1 1 1 1 1~ //alignmnt.2da
 	~QDPSION 1 1 0 1 0 0~ //dualclas.2da
-	~override/QDPSION.2da~ //CLAB
+	~MindAndSoul/data/QDPSION.2da~ //CLAB
 	~~ 
 	~0x00400000	1~ 
 	~MA0~ 
 	~* * * * * * * * * * * * * * * * * * * *~
-	SAY ~psion~
-	SAY ~Psion~
-	SAY ~PSION!~
+	SAY @1000
+	SAY @1001
+	SAY @1002
 
 	LAF fl#add_kit_ee
 		INT_VAR
-			briefdesc = RESOLVE_STR_REF (@0)
+			briefdesc = RESOLVE_STR_REF (@1002)
 		STR_VAR
 			kit_name = ~QDPSION~
 			hpclass = ~HPWIZ~
 	END
 
 //character creation fake kit	
-ADD_KIT ~QDPSIONC~
-	~QDPSIONC 1 0 1 1 0 0 0 0~ //clasweap.2da
-	~QDPSIONC 0 1 0 0 1 0 0 1 0 0 0 0 0 0 0 1 0 0 1 0 0 0 1 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~ //weapprof.2da 
-	~QDPSIONC 0 0 0 9 0 0~ //abclasrq.2da 
-	~QDPSIONC 0 0 0 0 0 0~ //abclsmod.2da
-	~QDPSIONC 0 0 0 17 0 0~ //abdcdsrq.2da
-	~QDPSIONC 0 0 0 15 0 0~ //abdcscrq.2da 
-	~QDPSIONC 1 1 1 1 1 1 1 1 1~ //alignmnt.2da
-	~QDPSIONC 1 1 0 1 0 0~ //dualclas.2da
-	~MindAndSoul/data/QDPSIONC.2da~ //CLAB
+ADD_KIT ~QD#PSION~
+	~QD#PSION 1 0 1 1 0 0 0 0~ //clasweap.2da
+	~QD#PSION 0 1 0 0 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~ //weapprof.2da 
+	~QD#PSION 0 0 0 9 0 0~ //abclasrq.2da 
+	~QD#PSION 0 0 0 0 0 0~ //abclsmod.2da
+	~QD#PSION 0 0 0 17 0 0~ //abdcdsrq.2da
+	~QD#PSION 0 0 0 15 0 0~ //abdcscrq.2da 
+	~QD#PSION 1 1 1 1 1 1 1 1 1~ //alignmnt.2da
+	~QD#PSION 1 1 0 1 0 0~ //dualclas.2da
+	~override/QD#PSION.2da~ //CLAB
 	~K_F_H K_F_HE K_F_E K_F_D K_F_G K_F_HO K_F_HL~ 
 	~0x00400000	2~ 
 	~MA0~ 
 	~* * * * * * * * * * * * * * * * * * * *~
-	SAY ~psion~
-	SAY ~Psion~
-	SAY ~PSION!~
+	SAY @1000
+	SAY @1001
+	SAY @1002
+	
+	LAF fl#add_kit_ee
+		INT_VAR
+			briefdesc = RESOLVE_STR_REF (@1002)
+		STR_VAR
+			kit_name = ~QD#PSION~
+			hpclass = ~HPWIZ~
+			numwslot = ~2~
+	END
+
+COPY ~MindAndSoul/data/features/QD!ALAC.spl~ ~override~ //alacrity, no divine magic.
+	
+//----------------------
+// POWERS
+//----------------------
+
+//grabbing psion kit id 
+COPY_EXISTING ~kitlist.2da~ ~override~
+  COUNT_2DA_COLS k_cols 
+  READ_2DA_ENTRIES_NOW k_rows k_cols 
+  FOR (k_row = 1; k_row < k_rows; ++k_row) BEGIN 
+    READ_2DA_ENTRY_FORMER k_rows k_row 1 ~k_kit~ 
+    PATCH_IF ~%k_kit%~ STRING_EQUAL_CASE ~QDPSION~ BEGIN
+      SET kit_row = %k_row%
+      READ_2DA_ENTRY_FORMER k_rows kit_row 9 psion_id
+    END
+  END
+BUT_ONLY
+
+//Borrow Time 
+COPY ~MindAndSoul/data/powers/QD_SIM.spl~ ~override~
+	SAY NAME1 @2000 
+	SAY UNIDENTIFIED_DESC @2001
+	
+COPY ~MindAndSoul/data/powers/QD_SIM#.spl~ ~override~ 
+
+//Patch the simulacrum to have psionic simulacrums have no spell or level drain. 
+COPY_EXISTING ~simulacr.spl~ ~override~ 
+	LPF ADD_SPELL_EFFECT INT_VAR opcode = 326 target = 1 timing = 1 parameter1 = %psion_id% parameter2 = 109  power = 0 STR_VAR resource = ~QD_SIM#~ END 
+
+//Dimension Hop 
+COPY ~MindAndSoul/data/powers/QD!TEL1.spl~ ~override~
+	SAY NAME1 @2002 
+	SAY UNIDENTIFIED_DESC @2003
+	
+/*
+COPY ~MindAndSoul/data/BLANKCLAB.2da~ ~override/QDPSYWR.2da~ 
+COPY ~MindAndSoul/data/PSICHANGE.2da~ ~override/QD#PSYWR.2da~ 
+
+//Psychic Warrior
+ADD_KIT ~QDPSYWR~
+	~QDPSYWR 2 2 2 2 2 2 2 2~ //clasweap.2da
+	~QDPSYWR 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~ //weapprof.2da 
+	~QDPSYWR 9 0 0 9 0 0~ //abclasrq.2da 
+	~QDPSYWR 0 0 0 0 0 0~ //abclsmod.2da
+	~QDPSYWR 17 0 0 17 0 0~ //abdcdsrq.2da
+	~QDPSYWR 15 0 0 15 0 0~ //abdcscrq.2da 
+	~QDPSYWR 1 1 1 1 1 1 1 1 1~ //alignmnt.2da
+	~QDPSYWR 0 0 0 0 0 0~ //dualclas.2da
+	~override/QDPSYWR.2da~ //CLAB
+	~~ 
+	~0x00400000	7~ 
+	~MA0~ 
+	~* * * * * * * * * * * * * * * * * * * *~
+	SAY ~psychic warrior~
+	SAY ~Psychic Warrior~
+	SAY ~PSYCHIC WARRIOR!~
 
 	LAF fl#add_kit_ee
 		INT_VAR
 			briefdesc = RESOLVE_STR_REF (@0)
 		STR_VAR
-			kit_name = ~QDPSIONC~
-			hpclass = ~HPWIZ~
-			numwslot = ~2~
+			kit_name = ~QDPSYWR~
+			hpclass = ~HPFM~
 	END
 
-COMPILE ~MindAndSoul/data/QDPSI_X.baf~ 
+//Psychic Warrior chargen kit
+ADD_KIT ~QD#PSYWR~
+	~QD#PSYWR 1 0 1 1 0 0 0 0~ //clasweap.2da
+	~QD#PSYWR 0 1 0 0 1 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~ //weapprof.2da 
+	~QD#PSYWR 9 0 0 9 0 0~ //abclasrq.2da 
+	~QD#PSYWR 0 0 0 0 0 0~ //abclsmod.2da
+	~QD#PSYWR 17 0 0 17 0 0~ //abdcdsrq.2da
+	~QD#PSYWR 15 0 0 15 0 0~ //abdcscrq.2da 
+	~QD#PSYWR 1 1 1 1 1 1 1 1 1~ //alignmnt.2da
+	~QD#PSYWR 0 0 0 0 0 0~ //dualclas.2da
+	~override/QD#PSYWR.2da~ //CLAB
+	~K_F_H K_F_HE K_F_E K_F_D K_F_G K_F_HO K_F_HL~ 
+	~0x00400000	2~ 
+	~MA0~ 
+	~* * * * * * * * * * * * * * * * * * * *~
+	SAY ~psychic warrior~
+	SAY ~Psychic Warrior~
+	SAY ~PSYCHIC WARRIOR!~
 
+	LAF fl#add_kit_ee
+		INT_VAR
+			briefdesc = RESOLVE_STR_REF (@0)
+		STR_VAR
+			kit_name = ~QD#PSYWR~
+			hpclass = ~HPFM~
+			numwslot = ~2~
+	END	
+	
+*/
+
+//Conversion script 
 COPY ~MindAndSoul/data/QDPSI_X.cre~ ~override~
 COPY ~MindAndSoul/data/QDPSI_X.spl~ ~override~
+COPY ~MindAndSoul/data/QD#WEAPS.spl~ ~override~ 
+
+COMPILE ~MindAndSoul/data/QDPSI_X.baf~ 

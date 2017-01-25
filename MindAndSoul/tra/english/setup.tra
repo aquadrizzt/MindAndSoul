@@ -1,1 +1,51 @@
 @0 = ~Mind And Soul~ 
+
+@1000 = ~psion~
+@1001 = ~Psion~
+@1002 = ~PSION: [...]
+
+CLASS FEATURES
+
+– May not wear any armor, although armor does not interfere with using psionic powers.
+– May only use the following weapons: dagger, quarterstaff, dart, sling.
+– May only become Proficient (one slot) in any weapon class.
+– May not place any slots in any fighting style.
+– May learn a moderate amount of psionic powers, which they learn from a Psionic Talents innate ability. 
+– Gain 4 Psi per level, which can be spent to use psionic powers. 
+– Hit Die: d4
+~ 
+
+@2000 = ~Borrow Time~
+@2001 = ~Borrow Time 
+
+Chronokinesis
+Psi Cost: 5 
+
+You pull your future self into your current time frame for several rounds. 
+
+For 18 seconds, your present and future selves can both act independently. After these 18 seconds have expired, future you disappears (because they have returned to their own time frame) and present you disappears for 18 seconds (because you were pulled into past you's present for 3 rounds). 
+
+NOTE: Do not use this power if you have no other party members. Doing so will cause the game to end.~ 
+
+@2002 = ~Dimension Hop~ 
+@2003 = ~Dimension Hop
+
+Psychoportation
+Psi Cost: 1 
+
+You leap through space-time, moving a short distance instantly. 
+
+You teleport to a target location within 10 feet of your current position.~ 
+
+/*
+@2002 = ~Breathless~ 
+@2003 = ~Breathless
+
+Autohypnosis
+Psi Cost: 1
+
+You slow your breathing to the point where it becomes undetectable. 
+
+For 1 minute, you are immune to all cloud effects, including the the spells Stinking Cloud, Death Fog, and Cloudkill, as well as the Gas Cloud ability of golems.~  
+
+*/
